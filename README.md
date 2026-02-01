@@ -376,5 +376,40 @@ Response time of the application
 
 CloudWatch alarms would notify the team if something goes wrong.
 
+====================================================================================================================
+**Assignment Notes:**
+
+**HTTPS / ACM**:-
+
+Right now, the ALB only uses HTTP (port 80). HTTPS is not implemented.
+
+How it would be done:
+
+Use AWS Certificate Manager (ACM) to create a TLS/SSL certificate for your domain.
+
+Configure the ALB to listen on HTTPS (port 443) using that certificate.
+
+Optionally, redirect HTTP traffic to HTTPS to make all connections secure.
+
+Why it’s not done here:
+
+ACM certificates need a real domain and DNS validation. For testing or demo purposes, we are just using HTTP.
+
+**Observability and Security Notes**
+**Logging Approach**:-
+
+Right now, we have a CloudWatch alarm for CPU usage in our Auto Scaling Group, so we can see if our servers are overloaded.
+
+EC2 logs (like Nginx or system logs) and ALB access logs are not currently collected.
+
+How it could be done in production:
+
+Option 1: Install the CloudWatch Agent on EC2. This will send system and app logs to CloudWatch so you can monitor everything without logging into the servers.
+
+Option 2: Enable ALB access logs to an S3 bucket. This will record all requests hitting the ALB and help analyze traffic or troubleshoot problems.
+
+Either approach makes it easier to see what’s happening in your system.
+
+
 
 
